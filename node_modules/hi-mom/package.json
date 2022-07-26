@@ -1,0 +1,41 @@
+{
+  "name": "hi-mom",
+  "version": "1.2.1",
+  "description": "A blazingly fast JavaScript library to say hi to your mom!",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "keywords": [
+    "hello-world",
+    "hello",
+    "hi",
+    "mom",
+    "hi-mom"
+  ],
+  "author": "Daniil Tsivinsky",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "jest": "^27.5.1",
+    "rollup": "^2.70.1"
+  },
+  "scripts": {
+    "prebuild": "npm run test",
+    "build": "rollup -c rollup.config.js",
+    "prepublishOnly": "npm run build",
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
+  "exports": {
+    ".": {
+      "require": "./lib/hi-mom.cjs",
+      "import": "./lib/hi-mom.esm.js"
+    }
+  },
+  "files": [
+    "lib/",
+    "languages/",
+    "index.d.ts"
+  ]
+}
