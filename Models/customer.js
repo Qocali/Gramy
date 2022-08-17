@@ -5,7 +5,10 @@ const {Schema} = mongoose;
 const grocerys = new Schema({
     name: String,
     surname: String,
-    adress: Number,
+    location: {
+        lat: Number,
+        long: Number
+    },
     createdAt: {
         type: Date,
         default: Date.now

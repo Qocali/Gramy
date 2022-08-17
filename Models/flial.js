@@ -8,7 +8,10 @@ const flials = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'object'
     },
-    location: Number,
+    location: {
+        lat: Number,
+        long: Number
+    },
     image: String,
     createdAt: {
         type: Date,

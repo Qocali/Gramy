@@ -9,7 +9,7 @@ import multer from "multer";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join('Public', 'object'));
+        cb(null, path.join('Public','image', 'object'));
     },
     filename: function (req, file, cb) {
         const filenamepart = file.originalname.split(".");
@@ -21,22 +21,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage});
 
-router.get("/object/all", async (req, res) => {
-    const data = await objectModel.find({});
-    res.send(data);
-});
+
 
 router.get("/object/:id/categories", async (req, res) => {
     const data = await objectCategoryModel.find().where('objectId', req.params.id).populate('category_id');
     res.send(data);
 });
 
-router.get("/object", (req, res) => {
-    const data = objectModel.find({name: reqquery.name});
-    res.send(data);
-});
-
-router.delete("/object:id", (req, res) => {
+router.delete("/objecatcategory:id", (req, res) => {
     const data = objectModel.findByIdAndUpdate(req.params.id, {IsDeactive: true});
     res.send(data);
 });

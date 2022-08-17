@@ -1,9 +1,8 @@
 import express from "express";
-import path from 'path'
+import path from "path";
 const router = express.Router();
 const app = express();
-import mongo from "../rcategory.js/category.js.js";
-import mongo from "../rcategory.js/";
+import categorydb from "../Model/category.js.js";
 import multer from "multer";
 const filefilter = (req, file, cb) => {
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
@@ -14,7 +13,7 @@ const filefilter = (req, file, cb) => {
 };
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join( 'Public', 'category'));
+    cb(null, path.join("Public", "category"));
   },
   filename: function (req, file, cb) {
     const filenamepart = file.originalname.split(".");
@@ -26,35 +25,41 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-
-router.get("/category", (req, res) => {
-  const data = mongo.find({});
+router.get("/Admin/category", (req, res) => {
+  const data = categorydb.find({});
   res.send(data);
 });
-router.post("/category", upload.single("categoryimage"), async (req, res) => {
-  const { path } = req.file;
-  const {
-    name,image,
-    created_at
-  } = req.body;
-  const m = new mongo({
-    image: path,
-    name,image,
-    created_at
+router.post(
+  "/Admin/category",
+  upload.single("categoryimage"),
+  async (req, res) => {
+    const { path } = req.file;
+    const { name, image, created_at } = req.body;
+    const m = new categorydb({
+      image: path,
+      name,
+      image,
+      created_at,
+    });
+    m.save();
+    res.end("ok");
+  }
+);
+router.get("/Admin/category:id", (req, res) => {
+  const data = categorydb.findById({ id: req.params.id });
+  res.send(data);
+});
+router.delete("/Admin/category:id", (req, res) => {
+  const data = categorydb.findByIdAndUpdate(req.params.id, {
+    IsDeactive: true,
   });
-  m.save();
-  res.end("ok");
-});
-router.get("/category:id", (req, res) => {
-  const data = mongo.findById({ id: req.params.id });
   res.send(data);
 });
-router.delete("/category:id", (req, res) => {
-  const data = mongo.findByIdAndUpdate(req.params.id, { IsDeactive: true });
-  res.send(data);
-});
-router.put("/category:id", (req, res) => {
-  const data = mongo.findByIdAndUpdate({ id: req.params.id }, req.body);
+router.put("/Admin/category:id", async (req, res) => {
+  const data = await categorydb.findByIdAndUpdate(
+    { id: req.params.id },
+    req.body
+  );
   res.send(data);
 });
 export default router;

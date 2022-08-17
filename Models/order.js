@@ -16,7 +16,10 @@ const orders = new Schema({
         type: Date,
         default: Date.now
     },
-    location: Number
+    location: {
+        lat: Number,
+        long: Number
+    }
 });
 const order = mongoose.model('order', orders);
 export default order;

@@ -14,7 +14,7 @@ const filefilter = (req, file, cb) => {
 };
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join('Public', 'user'));
+        cb(null, path.join('Public','image', 'user'));
     },
     filename: function (req, file, cb) {
         const filenamepart = file.originalname.split(".");
@@ -30,8 +30,10 @@ router.get("/user", (req, res) => {
 });
 router.post("/user", upload.single("userimage"), async (req, res) => {
     const {path} = req.file;
-    const {name, image, created_at} = req.body;
-    const m = new mongo({image: path, name, image, created_at});
+    const {name,surname,
+        username,
+        password} = req.body;
+    const m = new mongo({image: path, name,surname,username,password});
     m.save();
     res.end("ok");
 });

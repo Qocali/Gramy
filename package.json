@@ -17,6 +17,8 @@
     "express": "^4.18.1",
     "hi-mom": "^1.2.1",
     "http": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mailtrap": "^3.0.0",
     "mongoose": "^6.5.2"
   },
   "devDependencies": {
